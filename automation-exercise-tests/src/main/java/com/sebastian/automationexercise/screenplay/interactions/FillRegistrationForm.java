@@ -1,14 +1,27 @@
 package com.sebastian.automationexercise.screenplay.interactions;
 
+import static com.sebastian.automationexercise.ui.SignupPage.ADDRESS1_FIELD;
+import static com.sebastian.automationexercise.ui.SignupPage.BIRTH_DAY_DROPDOWN;
+import static com.sebastian.automationexercise.ui.SignupPage.BIRTH_MONTH_DROPDOWN;
+import static com.sebastian.automationexercise.ui.SignupPage.BIRTH_YEAR_DROPDOWN;
+import static com.sebastian.automationexercise.ui.SignupPage.CITY_FIELD;
+import static com.sebastian.automationexercise.ui.SignupPage.COUNTRY_DROPDOWN;
+import static com.sebastian.automationexercise.ui.SignupPage.CREATE_ACCOUNT_BUTTON;
+import static com.sebastian.automationexercise.ui.SignupPage.FIRST_NAME_FIELD;
+import static com.sebastian.automationexercise.ui.SignupPage.LAST_NAME_FIELD;
+import static com.sebastian.automationexercise.ui.SignupPage.MOBILE_NUMBER_FIELD;
+import static com.sebastian.automationexercise.ui.SignupPage.PASSWORD_FIELD;
+import static com.sebastian.automationexercise.ui.SignupPage.STATE_FIELD;
+import static com.sebastian.automationexercise.ui.SignupPage.TITLE_MR_RADIO;
+import static com.sebastian.automationexercise.ui.SignupPage.ZIPCODE_FIELD;
+
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.actions.SelectFromOptions;
 import net.serenitybdd.screenplay.targets.Target;
-import net.serenitybdd.annotations.Step;
-
-import static com.sebastian.automationexercise.ui.SignupPage.*;
 
 /**
  * Interaction for filling the complete user registration form.
@@ -73,6 +86,9 @@ public class FillRegistrationForm implements Interaction {
     );
   }
 
+  /**
+   * Builder class for constructing FillRegistrationForm instances.
+   */
   public static class Builder {
     private String firstName;
     private String lastName;
@@ -127,6 +143,14 @@ public class FillRegistrationForm implements Interaction {
       return this;
     }
 
+    /**
+     * Sets the birth date fields.
+     *
+     * @param day the birth day
+     * @param month the birth month
+     * @param year the birth year
+     * @return this builder
+     */
     public Builder birthDate(String day, String month, String year) {
       this.birthDay = day;
       this.birthMonth = month;
@@ -139,6 +163,11 @@ public class FillRegistrationForm implements Interaction {
       return this;
     }
 
+    /**
+     * Builds and returns a FillRegistrationForm instance with the configured values.
+     *
+     * @return a new FillRegistrationForm instance
+     */
     public FillRegistrationForm build() {
       return new FillRegistrationForm(this);
     }

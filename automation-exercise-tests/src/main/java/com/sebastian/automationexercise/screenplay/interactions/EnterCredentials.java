@@ -1,11 +1,11 @@
 package com.sebastian.automationexercise.screenplay.interactions;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.targets.Target;
-import net.serenitybdd.annotations.Step;
 
 /**
  * Interaction for entering login credentials.
@@ -33,7 +33,8 @@ public class EnterCredentials implements Interaction {
    * @param passwordField the target password field
    * @return an EnterCredentials interaction
    */
-  public static EnterCredentials of(String email, String password, Target emailField, Target passwordField) {
+  public static EnterCredentials of(String email, String password, 
+                                    Target emailField, Target passwordField) {
     return new EnterCredentials(email, password, emailField, passwordField);
   }
 

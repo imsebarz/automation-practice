@@ -1,12 +1,11 @@
 package com.sebastian.automationexercise.screenplay.interactions;
 
+import java.util.Map;
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.targets.Target;
-import net.serenitybdd.annotations.Step;
-
-import java.util.Map;
 
 /**
  * Interaction for filling multiple form fields efficiently.

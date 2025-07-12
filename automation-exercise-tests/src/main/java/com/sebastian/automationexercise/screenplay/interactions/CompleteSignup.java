@@ -1,11 +1,11 @@
 package com.sebastian.automationexercise.screenplay.interactions;
 
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Enter;
 import net.serenitybdd.screenplay.targets.Target;
-import net.serenitybdd.annotations.Step;
 
 /**
  * Interaction for completing a signup process with name and email.
@@ -18,7 +18,8 @@ public class CompleteSignup implements Interaction {
   private final Target emailField;
   private final Target signupButton;
 
-  private CompleteSignup(String name, String email, Target nameField, Target emailField, Target signupButton) {
+  private CompleteSignup(String name, String email, Target nameField, 
+                         Target emailField, Target signupButton) {
     this.name = name;
     this.email = email;
     this.nameField = nameField;
@@ -36,7 +37,8 @@ public class CompleteSignup implements Interaction {
    * @param signupButton the signup button to click
    * @return a CompleteSignup interaction
    */
-  public static CompleteSignup with(String name, String email, Target nameField, Target emailField, Target signupButton) {
+  public static CompleteSignup with(String name, String email, Target nameField, 
+                                    Target emailField, Target signupButton) {
     return new CompleteSignup(name, email, nameField, emailField, signupButton);
   }
 

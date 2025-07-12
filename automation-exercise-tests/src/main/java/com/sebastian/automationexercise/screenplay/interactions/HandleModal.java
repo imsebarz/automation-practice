@@ -1,13 +1,13 @@
 package com.sebastian.automationexercise.screenplay.interactions;
 
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
+
+import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.targets.Target;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import net.serenitybdd.annotations.Step;
-
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 /**
  * Interaction for handling modal dialogs (close or continue actions).
