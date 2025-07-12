@@ -2,14 +2,14 @@ package com.sebastian.automationexercise.screenplay.tasks;
 
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
+import com.sebastian.automationexercise.screenplay.interactions.AddToCart;
+import com.sebastian.automationexercise.screenplay.interactions.HandleModal;
 import com.sebastian.automationexercise.ui.ProductsPage;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.actions.Scroll;
-import net.serenitybdd.screenplay.waits.WaitUntil;
 
 /**
  * Task for adding products to the shopping cart.
@@ -27,48 +27,38 @@ public class AddProductToCart implements Task {
   public <T extends Actor> void performAs(T actor) {
     try {
       // First ensure products are visible by scrolling to products section
+      actor.attemptsTo(Scroll.to(ProductsPage.PRODUCTS_SECTION));
+      
+      // Add product based on position
+      if ("first".equals(productPosition)) {
+        actor.attemptsTo(
+            AddToCart.product(
+                ProductsPage.FIRST_PRODUCT_ADD_TO_CART, 
+                ProductsPage.ANY_ADD_TO_CART_BUTTON, 
+                "first product"
+            )
+        );
+      } else if ("second".equals(productPosition)) {
+        actor.attemptsTo(
+            AddToCart.anyProduct(ProductsPage.ANY_ADD_TO_CART_BUTTON)
+        );
+      }
+      
+      // Handle modal if it appears
       actor.attemptsTo(
-          Scroll.to(ProductsPage.PRODUCTS_SECTION)
+          HandleModal.with(
+              ProductsPage.CONTINUE_SHOPPING_BUTTON,
+              ProductsPage.MODAL_CLOSE_BUTTON,
+              "continue shopping after adding product"
+          )
       );
       
-      // Wait for any dynamic content/ads to load
-      Thread.sleep(1000);
-      
-      if ("first".equals(productPosition)) {
-        // Try first product specific button
-        actor.attemptsTo(Click.on(ProductsPage.FIRST_PRODUCT_ADD_TO_CART));
-      } else if ("second".equals(productPosition)) {
-        // For second product, try any available add to cart button
-        actor.attemptsTo(Click.on(ProductsPage.ANY_ADD_TO_CART_BUTTON));
-      }
-      
-      // Wait and handle modal if it appears
-      Thread.sleep(3000);
-      try {
-        // Try to close modal with Continue Shopping button
-        actor.attemptsTo(
-            WaitUntil.the(ProductsPage.CONTINUE_SHOPPING_BUTTON, isVisible())
-                .forNoMoreThan(5).seconds(),
-            Click.on(ProductsPage.CONTINUE_SHOPPING_BUTTON)
-        );
-      } catch (Exception continueException) {
-        try {
-          // Try to close modal with close button
-          actor.attemptsTo(Click.on(ProductsPage.MODAL_CLOSE_BUTTON));
-        } catch (Exception closeException) {
-          // Modal might not exist, continue
-        }
-      }
-      
     } catch (Exception e) {
-      // If everything fails, try a different add to cart button
-      try {
-        actor.attemptsTo(Click.on(ProductsPage.ANY_ADD_TO_CART_BUTTON));
-        Thread.sleep(2000);
-        actor.attemptsTo(Click.on(ProductsPage.CONTINUE_SHOPPING_BUTTON));
-      } catch (Exception fallbackException) {
-        // Continue without adding product - test may still pass on verification
-      }
+      // Fallback: try any available add to cart button and handle modal
+      actor.attemptsTo(
+          AddToCart.anyProduct(ProductsPage.ANY_ADD_TO_CART_BUTTON),
+          HandleModal.close(ProductsPage.CONTINUE_SHOPPING_BUTTON)
+      );
     }
   }
 
