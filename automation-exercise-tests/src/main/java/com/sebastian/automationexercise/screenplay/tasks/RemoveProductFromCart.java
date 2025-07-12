@@ -3,8 +3,8 @@ package com.sebastian.automationexercise.screenplay.tasks;
 import com.sebastian.automationexercise.ui.CartPage;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Performable;
+import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 
 /**

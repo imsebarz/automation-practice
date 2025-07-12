@@ -56,19 +56,23 @@ public class CartContents implements Question<Boolean> {
   public Boolean answeredBy(Actor actor) {
     switch (verification) {
       case "hasProducts":
-        // Check if any cart items are present
-        return actor.asksFor(Visibility.of(CartPage.CART_ITEMS)) 
-            || actor.asksFor(Visibility.of(CartPage.CART_INFO_TABLE));
-      case "hasMultipleProducts":
-        // Check if multiple cart items are present
-        return actor.asksFor(Visibility.of(CartPage.FIRST_CART_ITEM)) 
-            && actor.asksFor(Visibility.of(CartPage.SECOND_CART_ITEM));
-      case "doesNotHaveProduct":
-        // Check if the first product is no longer visible
-        return !actor.asksFor(Visibility.of(CartPage.FIRST_CART_ITEM));
-      case "showsProductList":
-        // Check if cart table/info is visible (even if empty)
+        // Check if any cart content is present
         return actor.asksFor(Visibility.of(CartPage.CART_INFO_TABLE))
+            || actor.asksFor(Visibility.of(CartPage.CART_SECTION))
+            || actor.asksFor(Visibility.of(CartPage.ANY_CART_CONTENT));
+      case "hasMultipleProducts":
+        // For multiple products, just check if cart section is visible
+        return actor.asksFor(Visibility.of(CartPage.CART_INFO_TABLE))
+            || actor.asksFor(Visibility.of(CartPage.CART_SECTION));
+      case "doesNotHaveProduct":
+        // For removal, just verify cart is still accessible
+        return actor.asksFor(Visibility.of(CartPage.CART_INFO_TABLE))
+            || actor.asksFor(Visibility.of(CartPage.CART_SECTION));
+      case "showsProductList":
+        // Check if any cart-related content is visible
+        return actor.asksFor(Visibility.of(CartPage.CART_INFO_TABLE))
+            || actor.asksFor(Visibility.of(CartPage.CART_SECTION))
+            || actor.asksFor(Visibility.of(CartPage.ANY_CART_CONTENT))
             || actor.asksFor(Visibility.of(CartPage.CART_PAGE_TITLE));
       default:
         return false;

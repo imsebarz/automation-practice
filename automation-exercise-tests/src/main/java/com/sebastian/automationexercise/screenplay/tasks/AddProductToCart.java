@@ -1,13 +1,14 @@
 package com.sebastian.automationexercise.screenplay.tasks;
 
+import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
+
 import com.sebastian.automationexercise.ui.ProductsPage;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
-import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Performable;
+import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 import net.serenitybdd.screenplay.waits.WaitUntil;
-import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isVisible;
 
 /**
  * Task for adding products to the shopping cart.
@@ -37,7 +38,8 @@ public class AddProductToCart implements Task {
       try {
         // Try to close modal with Continue Shopping button
         actor.attemptsTo(
-            WaitUntil.the(ProductsPage.CONTINUE_SHOPPING_BUTTON, isVisible()).forNoMoreThan(5).seconds(),
+            WaitUntil.the(ProductsPage.CONTINUE_SHOPPING_BUTTON, isVisible())
+                .forNoMoreThan(5).seconds(),
             Click.on(ProductsPage.CONTINUE_SHOPPING_BUTTON)
         );
       } catch (Exception continueException) {

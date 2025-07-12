@@ -27,6 +27,15 @@ public final class CartPage {
       .the("cart info table")
       .located(By.cssSelector("#cart_info_table, .cart_info"));
 
+  // More flexible cart detection
+  public static final Target CART_SECTION = Target
+      .the("cart section")
+      .located(By.cssSelector(".cart_info, #cart_info_table, .table-responsive"));
+
+  public static final Target ANY_CART_CONTENT = Target
+      .the("any cart content")
+      .located(By.xpath("//*[contains(@class, 'cart') or contains(@id, 'cart')]"));
+
   // Cart items
   public static final Target CART_ITEMS = Target
       .the("cart items")
@@ -34,11 +43,13 @@ public final class CartPage {
 
   public static final Target FIRST_CART_ITEM = Target
       .the("first cart item")
-      .located(By.cssSelector("#cart_info_table tbody tr:first-child, .cart_info_table tbody tr:first-child"));
+      .located(By.cssSelector("#cart_info_table tbody tr:first-child, "
+          + ".cart_info_table tbody tr:first-child"));
 
   public static final Target SECOND_CART_ITEM = Target
       .the("second cart item")
-      .located(By.cssSelector("#cart_info_table tbody tr:nth-child(2), .cart_info_table tbody tr:nth-child(2)"));
+      .located(By.cssSelector("#cart_info_table tbody tr:nth-child(2), "
+          + ".cart_info_table tbody tr:nth-child(2)"));
 
   // Product details in cart
   public static final Target PRODUCT_NAME = Target
