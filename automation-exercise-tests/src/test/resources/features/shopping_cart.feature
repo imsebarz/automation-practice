@@ -16,12 +16,12 @@ Feature: Shopping Cart Management
     Then the product is displayed in the cart
 
   Scenario: HU-02 Add multiple products to the cart
-    Given I add a product to the cart
+    Given I have added a product to the cart
     When I add another different product
     Then I can see both products in the cart list
 
   Scenario: HU-03 Remove a product from the cart
-    Given I add a product to the cart
+    Given I have added a product to the cart
     And I add another different product
     When I go to the shopping cart
     And I remove one of the products
