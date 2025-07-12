@@ -7,6 +7,7 @@ import com.sebastian.automationexercise.screenplay.actors.Users;
 import com.sebastian.automationexercise.screenplay.questions.BannerText;
 import com.sebastian.automationexercise.screenplay.questions.ErrorMessage;
 import com.sebastian.automationexercise.screenplay.questions.HomePageVisibility;
+import com.sebastian.automationexercise.screenplay.questions.LoginPageVisibility;
 import com.sebastian.automationexercise.screenplay.questions.LoggedInStatus;
 import com.sebastian.automationexercise.screenplay.tasks.ContinueToHomePage;
 import com.sebastian.automationexercise.screenplay.tasks.DeleteAccount;
@@ -14,6 +15,7 @@ import com.sebastian.automationexercise.screenplay.tasks.Login;
 import com.sebastian.automationexercise.screenplay.tasks.Logout;
 import com.sebastian.automationexercise.screenplay.tasks.Navigate;
 import com.sebastian.automationexercise.screenplay.tasks.Register;
+import com.sebastian.automationexercise.screenplay.tasks.SignupWithExistingEmail;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
@@ -74,8 +76,7 @@ public class AutomationExerciseSteps {
     List<Map<String, String>> userInfo = dataTable.asMaps(String.class, String.class);
     Map<String, String> info = userInfo.get(0);
     
-    registrationTask = Register.withCredentials(info.get("name"), info.get("email"));
-    user.attemptsTo(registrationTask);
+    user.attemptsTo(SignupWithExistingEmail.withCredentials(info.get("name"), info.get("email")));
   }
 
   @When("User logs out")
@@ -141,7 +142,7 @@ public class AutomationExerciseSteps {
 
   @Then("User is redirected to the login page")
   public void userIsRedirectedToTheLoginPage() {
-    user.should(seeThat(HomePageVisibility.isVisible(), equalTo(true)));
+    user.should(seeThat(LoginPageVisibility.isVisible(), equalTo(true)));
   }
 
   @And("User is no longer logged in")
