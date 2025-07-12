@@ -66,4 +66,9 @@ public final class HomePage {
   public static final Target DELETE_ACCOUNT_BUTTON = Target
       .the("delete account button")
       .located(By.cssSelector("a[data-qa='continue-button']"));
+
+  // Cart link
+  public static final Target CART_LINK = Target
+      .the("cart link")
+      .located(By.cssSelector("a[href='/view_cart']"));
 }

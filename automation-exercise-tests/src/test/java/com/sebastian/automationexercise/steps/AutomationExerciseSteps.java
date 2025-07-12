@@ -5,16 +5,22 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.sebastian.automationexercise.screenplay.actors.Users;
 import com.sebastian.automationexercise.screenplay.questions.BannerText;
+import com.sebastian.automationexercise.screenplay.questions.CartContents;
 import com.sebastian.automationexercise.screenplay.questions.ErrorMessage;
 import com.sebastian.automationexercise.screenplay.questions.HomePageVisibility;
 import com.sebastian.automationexercise.screenplay.questions.LoginPageVisibility;
 import com.sebastian.automationexercise.screenplay.questions.LoggedInStatus;
+import com.sebastian.automationexercise.screenplay.questions.ProductsPageVisibility;
+import com.sebastian.automationexercise.screenplay.tasks.AddProductToCart;
 import com.sebastian.automationexercise.screenplay.tasks.ContinueToHomePage;
 import com.sebastian.automationexercise.screenplay.tasks.DeleteAccount;
 import com.sebastian.automationexercise.screenplay.tasks.Login;
 import com.sebastian.automationexercise.screenplay.tasks.Logout;
 import com.sebastian.automationexercise.screenplay.tasks.Navigate;
+import com.sebastian.automationexercise.screenplay.tasks.NavigateToCart;
+import com.sebastian.automationexercise.screenplay.tasks.NavigateToProducts;
 import com.sebastian.automationexercise.screenplay.tasks.Register;
+import com.sebastian.automationexercise.screenplay.tasks.RemoveProductFromCart;
 import com.sebastian.automationexercise.screenplay.tasks.SignupWithExistingEmail;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
@@ -153,5 +159,63 @@ public class AutomationExerciseSteps {
   @Then("User should see the home page")
   public void userShouldSeeTheHomePage() {
     user.should(seeThat(HomePageVisibility.isVisible(), equalTo(true)));
+  }
+
+  // Shopping Cart Step Definitions
+
+  @Given("I am on the products section")
+  public void iAmOnTheProductsSection() {
+    user.attemptsTo(
+        Navigate.toHomePage(),
+        NavigateToProducts.now()
+    );
+    user.should(seeThat(ProductsPageVisibility.isVisible(), equalTo(true)));
+  }
+
+  @When("I add a product to the cart")
+  public void iAddAProductToTheCart() {
+    user.attemptsTo(AddProductToCart.firstProduct());
+  }
+
+  @When("I add another different product")
+  public void iAddAnotherDifferentProduct() {
+    user.attemptsTo(AddProductToCart.secondProduct());
+  }
+
+  @When("I go to the shopping cart")
+  public void iGoToTheShoppingCart() {
+    user.attemptsTo(NavigateToCart.now());
+  }
+
+  @When("I navigate to the shopping cart")
+  public void iNavigateToTheShoppingCart() {
+    user.attemptsTo(NavigateToCart.now());
+  }
+
+  @When("I remove one of the products")
+  public void iRemoveOneOfTheProducts() {
+    user.attemptsTo(RemoveProductFromCart.firstProduct());
+  }
+
+  @Then("the product is displayed in the cart")
+  public void theProductIsDisplayedInTheCart() {
+    user.attemptsTo(NavigateToCart.now());
+    user.should(seeThat(CartContents.hasProducts(), equalTo(true)));
+  }
+
+  @Then("I can see both products in the cart list")
+  public void iCanSeeBothProductsInTheCartList() {
+    user.attemptsTo(NavigateToCart.now());
+    user.should(seeThat(CartContents.hasMultipleProducts(), equalTo(true)));
+  }
+
+  @Then("the product is no longer visible in the cart")
+  public void theProductIsNoLongerVisibleInTheCart() {
+    user.should(seeThat(CartContents.doesNotHaveProduct(), equalTo(true)));
+  }
+
+  @Then("I can see the list with the added products")
+  public void iCanSeeTheListWithTheAddedProducts() {
+    user.should(seeThat(CartContents.showsProductList(), equalTo(true)));
   }
 }
