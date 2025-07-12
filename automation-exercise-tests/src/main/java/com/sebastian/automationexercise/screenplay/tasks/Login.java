@@ -5,11 +5,12 @@ import static com.sebastian.automationexercise.ui.LoginPage.LOGIN_BUTTON;
 import static com.sebastian.automationexercise.ui.LoginPage.LOGIN_EMAIL_FIELD;
 import static com.sebastian.automationexercise.ui.LoginPage.LOGIN_PASSWORD_FIELD;
 
+import com.sebastian.automationexercise.screenplay.interactions.EnterCredentials;
+import com.sebastian.automationexercise.screenplay.interactions.NavigateTo;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actions.Enter;
 
 /**
  * Task for logging into the application.
@@ -57,9 +58,8 @@ public class Login implements Task {
   @Step("{0} logs in with email '#email'")
   public <T extends Actor> void performAs(T actor) {
     actor.attemptsTo(
-        Click.on(SIGNUP_LOGIN_LINK),
-        Enter.theValue(email).into(LOGIN_EMAIL_FIELD),
-        Enter.theValue(password).into(LOGIN_PASSWORD_FIELD),
+        NavigateTo.page(SIGNUP_LOGIN_LINK),
+        EnterCredentials.of(email, password, LOGIN_EMAIL_FIELD, LOGIN_PASSWORD_FIELD),
         Click.on(LOGIN_BUTTON)
     );
   }

@@ -5,11 +5,11 @@ import static com.sebastian.automationexercise.ui.LoginPage.SIGNUP_BUTTON;
 import static com.sebastian.automationexercise.ui.LoginPage.SIGNUP_EMAIL_FIELD;
 import static com.sebastian.automationexercise.ui.LoginPage.SIGNUP_NAME_FIELD;
 
+import com.sebastian.automationexercise.screenplay.interactions.CompleteSignup;
+import com.sebastian.automationexercise.screenplay.interactions.NavigateTo;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actions.Click;
-import net.serenitybdd.screenplay.actions.Enter;
 
 /**
  * Task for attempting to sign up with an existing email.
@@ -41,13 +41,9 @@ public class SignupWithExistingEmail implements Task {
   @Step("{0} attempts signup with existing email '#email'")
   public <T extends Actor> void performAs(T actor) {
     actor.attemptsTo(
-        // Navigate to signup page
-        Click.on(SIGNUP_LOGIN_LINK),
-        
-        // Fill initial signup form only (should show error and not proceed)
-        Enter.theValue(name).into(SIGNUP_NAME_FIELD),
-        Enter.theValue(email).into(SIGNUP_EMAIL_FIELD),
-        Click.on(SIGNUP_BUTTON)
+        // Navigate to signup page and attempt signup (should show error)
+        NavigateTo.page(SIGNUP_LOGIN_LINK),
+        CompleteSignup.with(name, email, SIGNUP_NAME_FIELD, SIGNUP_EMAIL_FIELD, SIGNUP_BUTTON)
     );
   }
 

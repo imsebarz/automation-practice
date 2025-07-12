@@ -2,10 +2,10 @@ package com.sebastian.automationexercise.screenplay.tasks;
 
 import static com.sebastian.automationexercise.ui.HomePage.LOGOUT_LINK;
 
+import com.sebastian.automationexercise.screenplay.interactions.NavigateTo;
 import net.serenitybdd.annotations.Step;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Task;
-import net.serenitybdd.screenplay.actions.Click;
 
 /**
  * Task for logging out of the application.
@@ -29,7 +29,7 @@ public class Logout implements Task {
   @Step("{0} logs out")
   public <T extends Actor> void performAs(T actor) {
     actor.attemptsTo(
-        Click.on(LOGOUT_LINK)
+        NavigateTo.element(LOGOUT_LINK, "logout")
     );
   }
 }
