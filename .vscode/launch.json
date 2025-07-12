@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run Automation Tests",
+            "request": "launch",
+            "mainClass": "com.sebastian.automationexercise.runners.AutomationExerciseTestRunner",
+            "projectName": "automation-exercise-tests",
+            "cwd": "${workspaceFolder}/automation-exercise-tests"
+        },
+        {
+            "type": "java",
+            "name": "Debug Automation Tests",
+            "request": "launch",
+            "mainClass": "com.sebastian.automationexercise.runners.AutomationExerciseTestRunner",
+            "projectName": "automation-exercise-tests",
+            "cwd": "${workspaceFolder}/automation-exercise-tests"
+        }
+    ]
+}
