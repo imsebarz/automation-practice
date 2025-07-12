@@ -52,6 +52,9 @@ public final class Users {
     // Uncomment the line below to run in headless mode
     // options.addArguments("--headless");
     
-    return new ChromeDriver(options);
+    WebDriver driver = new ChromeDriver(options);
+    driver.manage().window().maximize();
+    
+    return driver;
   }
 }
