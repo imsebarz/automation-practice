@@ -28,5 +28,10 @@ Feature: Shopping Cart Management
     Then the product is no longer visible in the cart
 
   Scenario: HU-04 View product list in the cart
+    Given I have added a product to the cart
     When I navigate to the shopping cart
     Then I can see the list with the added products
+
+  Scenario: HU-05 View empty cart
+    When I navigate to the shopping cart
+    Then the cart is empty

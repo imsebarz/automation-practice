@@ -109,4 +109,13 @@ public class ShoppingCartSteps {
         Actor user = StepContext.getCurrentActor();
         user.should(seeThat(CartContents.showsProductList(), equalTo(true)));
     }
+
+    /**
+     * Verifies that the cart is empty.
+     */
+    @Then("the cart is empty")
+    public void theCartIsEmpty() {
+        Actor user = StepContext.getCurrentActor();
+        user.should(seeThat(CartContents.isEmpty(), equalTo(true)));
+    }
 }

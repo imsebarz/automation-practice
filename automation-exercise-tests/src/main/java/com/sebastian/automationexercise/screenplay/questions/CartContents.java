@@ -52,6 +52,15 @@ public class CartContents implements Question<Boolean> {
     return new CartContents("showsProductList");
   }
 
+  /**
+   * Creates a question to check if the cart is empty.
+   *
+   * @return a CartContents question for empty cart verification
+   */
+  public static CartContents isEmpty() {
+    return new CartContents("isEmpty");
+  }
+
   @Override
   public Boolean answeredBy(Actor actor) {
     switch (verification) {
@@ -69,11 +78,14 @@ public class CartContents implements Question<Boolean> {
         return actor.asksFor(Visibility.of(CartPage.CART_INFO_TABLE))
             || actor.asksFor(Visibility.of(CartPage.CART_SECTION));
       case "showsProductList":
-        // Check if any cart-related content is visible
-        return actor.asksFor(Visibility.of(CartPage.CART_INFO_TABLE))
-            || actor.asksFor(Visibility.of(CartPage.CART_SECTION))
-            || actor.asksFor(Visibility.of(CartPage.ANY_CART_CONTENT))
-            || actor.asksFor(Visibility.of(CartPage.CART_PAGE_TITLE));
+        // Check if there are actual cart items (products) visible
+        return actor.asksFor(Visibility.of(CartPage.CART_ITEMS))
+            || actor.asksFor(Visibility.of(CartPage.FIRST_CART_ITEM));
+      case "isEmpty":
+        // Check if empty cart message is visible or no cart items exist
+        return actor.asksFor(Visibility.of(CartPage.EMPTY_CART_MESSAGE))
+            || (!actor.asksFor(Visibility.of(CartPage.CART_ITEMS)) 
+                && !actor.asksFor(Visibility.of(CartPage.FIRST_CART_ITEM)));
       default:
         return false;
     }
