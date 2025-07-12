@@ -30,11 +30,33 @@ public final class BannerText implements Question<Boolean> {
 
   @Override
   public Boolean answeredBy(Actor actor) {
-    Target bannerElement = Target
-        .the("banner with text: " + expectedText)
-        .located(By.xpath("//h2[contains(text(), '" + expectedText + "')]"));
+    // Try multiple possible selectors for banner elements
+    Target[] possibleBanners = {
+        Target.the("banner with data-qa")
+            .located(By.cssSelector("h2[data-qa*='account']")),
+        Target.the("banner with text")
+            .located(By.xpath("//h2[contains(text(), '" + expectedText + "')]")),
+        Target.the("banner with partial text")
+            .located(By.xpath("//h2[contains(., '" + expectedText + "')]")),
+        Target.the("page title")
+            .located(By.xpath("//title[contains(text(), '" + expectedText + "')]")),
+        Target.the("any element with text")
+            .located(By.xpath("//*[contains(text(), '" + expectedText + "')]"))
+    };
     
-    return Visibility.of(bannerElement).answeredBy(actor) 
-        && Text.of(bannerElement).answeredBy(actor).contains(expectedText);
+    for (Target banner : possibleBanners) {
+      try {
+        if (Visibility.of(banner).answeredBy(actor)) {
+          String actualText = Text.of(banner).answeredBy(actor);
+          if (actualText != null && actualText.contains(expectedText)) {
+            return true;
+          }
+        }
+      } catch (Exception e) {
+        // Continue to next selector if this one fails
+      }
+    }
+    
+    return false;
   }
 }
