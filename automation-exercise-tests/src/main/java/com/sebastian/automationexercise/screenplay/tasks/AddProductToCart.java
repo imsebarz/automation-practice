@@ -8,6 +8,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Performable;
 import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
+import net.serenitybdd.screenplay.actions.Scroll;
 import net.serenitybdd.screenplay.waits.WaitUntil;
 
 /**
@@ -25,6 +26,14 @@ public class AddProductToCart implements Task {
   @Step("{0} adds the {productPosition} product to cart")
   public <T extends Actor> void performAs(T actor) {
     try {
+      // First ensure products are visible by scrolling to products section
+      actor.attemptsTo(
+          Scroll.to(ProductsPage.PRODUCTS_SECTION)
+      );
+      
+      // Wait for any dynamic content/ads to load
+      Thread.sleep(1000);
+      
       if ("first".equals(productPosition)) {
         // Try first product specific button
         actor.attemptsTo(Click.on(ProductsPage.FIRST_PRODUCT_ADD_TO_CART));

@@ -18,6 +18,11 @@ public final class ProductsPage {
       .the("products link")
       .located(By.cssSelector("a[href='/products']"));
 
+  // Ad banner elements (for handling page blocking ads)
+  public static final Target AD_BANNER = Target
+      .the("advertisement banner")
+      .located(By.cssSelector(".advertisement, .google-auto-placed, [id*='google_ads']"));
+
   // Products section
   public static final Target PRODUCTS_SECTION = Target
       .the("products section")
