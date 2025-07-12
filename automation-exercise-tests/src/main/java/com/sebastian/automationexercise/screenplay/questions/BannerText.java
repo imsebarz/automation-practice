@@ -30,18 +30,12 @@ public final class BannerText implements Question<Boolean> {
 
   @Override
   public Boolean answeredBy(Actor actor) {
-    // Try multiple possible selectors for banner elements
+    // Try primary banner selectors
     Target[] possibleBanners = {
         Target.the("banner with data-qa")
             .located(By.cssSelector("h2[data-qa*='account']")),
         Target.the("banner with text")
-            .located(By.xpath("//h2[contains(text(), '" + expectedText + "')]")),
-        Target.the("banner with partial text")
-            .located(By.xpath("//h2[contains(., '" + expectedText + "')]")),
-        Target.the("page title")
-            .located(By.xpath("//title[contains(text(), '" + expectedText + "')]")),
-        Target.the("any element with text")
-            .located(By.xpath("//*[contains(text(), '" + expectedText + "')]"))
+            .located(By.xpath("//h2[contains(text(), '" + expectedText + "')]"))
     };
     
     for (Target banner : possibleBanners) {
